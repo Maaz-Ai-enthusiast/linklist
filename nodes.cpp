@@ -42,7 +42,7 @@ using namespace std;
 class Node{
     public:
     int val;
-    Node* next;// Pointer to the next Node objectexp
+    Node* next;// Pointer to the next Node object in the list
     Node(int data){
         this->val = data;
         // val = data;
