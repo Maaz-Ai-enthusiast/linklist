@@ -64,19 +64,40 @@ void insertAtStart(Node* &head, int data){
 
 // insert a node at specified position
 
-
-void insertAtPosition( Node* head, int val, int pos ){
+void insertAtPosition(Node*& head, int val, int pos) {
+    if (pos < 1) {
+        cout << "Invalid position. Must be greater than or equal to 1." << endl;
+        return;
+    }
 
     Node* new_node = new Node(val);
+
+    // Special case: Insert at the head
+    if (pos == 1) {
+        new_node->next = head;
+        head = new_node;
+        return;
+    }
+
     Node* temp = head;
     int count = 1;
-    while(count < pos-1){
+
+    // Traverse to the position before the desired position
+    while (temp != nullptr && count < pos - 1) {
         temp = temp->next;
         count++;
     }
+
+    if (temp == nullptr) {
+        // Position is out of bounds
+        cout << "Position out of bounds." << endl;
+        delete new_node; // Avoid memory leak
+        return;
+    }
+
+    // Insert the new node
     new_node->next = temp->next;
-    temp->next = new_node;      
-  
+    temp->next = new_node;
 }
 
 // insert the node at the end of the linklist
@@ -96,42 +117,72 @@ void insertAtEnd(Node* &head, int data){
 
 // update the value of the node at the specified position
 
-void updateAtPosition(Node* head, int val, int pos){
+void updateAtPosition(Node* head, int val, int pos) {
+    if (head == nullptr) {
+        cout << "Error: The list is empty." << endl;
+        return;
+    }
+
+    if (pos < 1) {
+        cout << "Error: Invalid position. Position must be >= 1." << endl;
+        return;
+    }
+
     Node* temp = head;
     int count = 1;
-    while(count < pos){
+
+    // Traverse the list to find the desired position
+    while (temp != nullptr && count < pos) {
         temp = temp->next;
         count++;
     }
+
+    if (temp == nullptr) {
+        // Position is out of bounds
+        cout << "Error: Position out of bounds." << endl;
+        return;
+    }
+
+    // Update the value at the specified position
     temp->val = val;
 }
 
 
 // delete the first node
 
+void deleteAtStart(Node*& head) {
+    if (head == nullptr) {
+        cout << "Error: List is already empty." << endl;
+        return;
+    }
 
-void deleteAtStart(Node* &head){
-    Node* temp = head;
-    head = head->next;
-    free(temp);
+    Node* temp = head;  // Store the current head
+    head = head->next;  // Update head to the next node
+    delete temp;        // Free memory for the removed node
 }
 
 // delete the last node
 
-void deleteAtEnd(Node* &head){
-    Node* temp = head;
-    if(head == NULL || head->next == NULL){
+void deleteAtEnd(Node*& head) {
+    if (head == nullptr) return;  // Empty list case
+    
+    if (head->next == nullptr) {  // Single-node list case
         delete head;
-        head = NULL;
+        head = nullptr;
         return;
     }
-    while(temp->next->next!= NULL){
-        temp = temp->next;
+
+    Node* temp = head;
+    while (temp->next != nullptr) {
+        temp = temp->next;  // Traverse to the last node
     }
-    // delete temp->next;
-    free(temp->next);
-    temp->next = NULL;
+
+    // Now `temp` is pointing to the last node
+    delete temp;   // Delete the last node
+    temp = nullptr;
 }
+
+
 
 // delete the node at the specified position
 
