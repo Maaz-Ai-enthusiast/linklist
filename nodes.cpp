@@ -39,33 +39,43 @@
 #include<bits/stdc++.h>
 using namespace std;
 
-class Node{
+class Node {
     public:
     int val;
-    Node* next;// Pointer to the next Node object in the list
-    Node(int data){
-        this->val = data;
-        // val = data;
-        next = NULL; 
+    Node* next; // Pointer to the next Node object in the list
+
+    // Constructor to initialize the node with a given value
+    Node(int data) {
+        this->val = data; // Initialize the node's value
+        next = NULL;       // Set the next pointer to NULL by default
     }
+};
 
+class LinkedList {
+    private:
+        Node* head; // Head of the linked list
 
+    public:
+        // Constructor to initialize the linked list
+        LinkedList() {
+            head = NULL;
+        }
 
+        // Destructor to delete all nodes in the list (deallocated automatically when the object is destroyed)
         ~LinkedList() {
-            clear();  // Use clear function to delete all nodes
+            clear();  // Use the clear function to delete all nodes
         }
 
         // Function to clear the list and deallocate memory for all nodes
         void clear() {
-            Node* current = head;
+            Node* current = head;  // Start with the head node
             while (current != NULL) {
                 Node* nextNode = current->next;  // Save the pointer to the next node
                 delete current;  // Delete the current node to free its memory
                 current = nextNode;  // Move to the next node
             }
-            head = NULL;  // After clearing, set head to NULL
+            head = NULL;  // After clearing, set head to NULL to indicate the list is empty
         }
-
 };
 
 
