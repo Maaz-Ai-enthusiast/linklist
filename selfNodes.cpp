@@ -65,6 +65,7 @@ void insertAtEnd(Node* &head, int data) {
     }
 
     temp->next = new_node;
+    
 }
 
 void deleteAtStart(Node* &head) {

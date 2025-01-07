@@ -52,13 +52,16 @@ class Node{
 
 
 // insert a node into start of linklist having constant time complexity
-
-void insertAtStart(Node* &head, int data){
-    Node* new_node = new Node(data);
-    new_node->next = head;
-    head = new_node; 
-  
+void insertAtStart(Node* &head, int data) {
+    Node* new_node = new Node(data);  // Create a new node with the given data
+    if (head == NULL) {  // If the list is empty
+        head = new_node;  // Set the new node as the head
+    } else {
+        new_node->next = head;  // Point the new node to the current head
+        head = new_node;  // Update head to the new node
+    }
 }
+
 
 
 
@@ -186,17 +189,46 @@ void deleteAtEnd(Node*& head) {
 
 // delete the node at the specified position
 
-void deleteAtPosition(Node* head ,int pos){
+void deleteAtPosition(Node* head, int pos) {
+    if (head == NULL) {
+        cout << "The list is empty." << endl;
+        return;
+    }
+
+    if (pos < 1) {
+        cout << "Invalid position. Must be greater than or equal to 1." << endl;
+        return;
+    }
+
+    // Special case: Deleting the head node
+    if (pos == 1) {
+        Node* toDelete = head;
+        head = head->next;  // Move the head pointer to the next node
+        free(toDelete);     // Deallocate memory
+        return;
+    }
+
     Node* temp = head;
     int count = 1;
-    while(count < pos-1){
+
+    // Traverse to the node just before the position
+    while (temp != NULL && count < pos - 1) {
         temp = temp->next;
         count++;
     }
+
+    // Check if position is out of bounds
+    if (temp == NULL || temp->next == NULL) {
+        cout << "Position out of bounds." << endl;
+        return;
+    }
+
+    // Delete the node at the specified position
     Node* toDelete = temp->next;
     temp->next = temp->next->next;
-    free(toDelete);
+    free(toDelete);  // Deallocate memory
 }
+
 
 // display the list of nodes
 void display(Node* head){
