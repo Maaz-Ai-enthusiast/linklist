@@ -48,6 +48,24 @@ class Node{
         // val = data;
         next = NULL; 
     }
+
+
+
+        ~LinkedList() {
+            clear();  // Use clear function to delete all nodes
+        }
+
+        // Function to clear the list and deallocate memory for all nodes
+        void clear() {
+            Node* current = head;
+            while (current != NULL) {
+                Node* nextNode = current->next;  // Save the pointer to the next node
+                delete current;  // Delete the current node to free its memory
+                current = nextNode;  // Move to the next node
+            }
+            head = NULL;  // After clearing, set head to NULL
+        }
+
 };
 
 
